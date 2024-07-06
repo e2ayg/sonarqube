@@ -79,7 +79,7 @@ Replace script variables with the necessary values.
 ./scripts/self-signed-cert.sh
 ```
 
-## Prepare the Terraform backend:
+### Prepare the Terraform backend:
 
 Run the [prepare=backend.sh](/scripts/prepare-backend.sh) script to prepare the backend configuration for Terraform:
 
@@ -87,7 +87,27 @@ Run the [prepare=backend.sh](/scripts/prepare-backend.sh) script to prepare the 
 ./scripts/prepare-backend.sh
 ```
 
-Replace backend S3 bucket and DynamoDB values with the outputs from the 
+### Replace Backend S3 Bucket and DynamoDB Table Values:
+
+After running the script, replace the backend S3 bucket and DynamoDB table values in your terraform configuration with the outputs from the script.
+
+In your terraform configuration file [main.tf](/terraform/main.tf), find the backend configuration block and replace the placeholders with the actual values from the script outputs:
+
+```Bash
+terraform {
+    backend "s3" {
+    bucket         = "sonarqube-tfstate-<DATE_STRING>"
+    key            = "terraform.tfstate"
+    region         = "eu-west-2"
+    dynamodb_table = "sonarqube-tfstate-lock-table-<DATE_STRING>"
+    encrypt        = true
+    }
+}
+```
+
+Replace <DATE_STRING> with the actual date string from the script outputs.
+
+
 
 Initialize the Terraform configuration:
 
@@ -95,7 +115,7 @@ Initialize the Terraform configuration:
 terraform init
 ```
 
-Review and edit the terraform.tfvars file to match your requirements:
+Create a `terraform.tfvars` file in the root of your Terraform configuration directory and add the following variables:
 
 ```
 db_username     = "<database username>"
