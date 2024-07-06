@@ -69,7 +69,28 @@ git clone git@github.com:e2ayg/sonarqube.git
 cd sonarqube
 ```
 
+### Dockerfile
 
+This project uses a custom Dockerfile to build the SonarQube container image. The Dockerfile is based on the official SonarQube community edition image and includes the following customizations:
+```Docker
+# Use the official SonarQube community edition as the base image
+FROM sonarqube:9.9.6-community
+
+# Create necessary directories with correct permissions
+USER root
+RUN mkdir -p /opt/sonarqube/data /opt/sonarqube/logs /opt/sonarqube/extensions && \
+    chown -R sonarqube:sonarqube /opt/sonarqube/data /opt/sonarqube/logs /opt/sonarqube/extensions
+
+# Expose the web port
+EXPOSE 9000
+
+# Define volumes to be mounted at container startup
+VOLUME ["/opt/sonarqube/data", "/opt/sonarqube/logs", "/opt/sonarqube/extensions"]
+
+# Switch to the non-root user
+USER sonarqube
+
+```
 ### Generate a Self-Signed Certificate
 
 Run the [self-signed-cert.sh](/scripts/self-signed-cert.sh) script to prepare and upload it to the AWS ACM.
@@ -95,25 +116,22 @@ In your terraform configuration file [main.tf](/terraform/main.tf), find the bac
 
 ```Bash
 terraform {
-    backend "s3" {
-    bucket         = "sonarqube-tfstate-<DATE_STRING>"
-    key            = "terraform.tfstate"
-    region         = "eu-west-2"
-    dynamodb_table = "sonarqube-tfstate-lock-table-<DATE_STRING>"
-    encrypt        = true
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~>5.33.0"
     }
+  }
+  backend "s3" {
+    bucket         = "<S3 bucket name>"
+    key            = "./terraform.tfstate"
+    region         = "us-west-2"
+    dynamodb_table = "<DynamoDB table name>"
+    encrypt        = true
+  }
 }
 ```
 
-Replace <DATE_STRING> with the actual date string from the script outputs.
-
-
-
-Initialize the Terraform configuration:
-
-```Bash
-terraform init
-```
 
 Create a `terraform.tfvars` file in the root of your Terraform configuration directory and add the following variables:
 
@@ -124,6 +142,13 @@ allowed_ip      = "<Allowed IP address - ex. 10.0.0.5/32>"
 aws_region      = "us-west-2"
 cerfiticate_arn = "Self-Signed AWS ACM certificate ARN"
 email           = "email for alerts"
+```
+
+
+Initialize the Terraform configuration:
+
+```Bash
+terraform init
 ```
 
 Check the Terraform configuration:

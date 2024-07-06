@@ -6,10 +6,10 @@ terraform {
     }
   }
   backend "s3" {
-    bucket         = "sonarqube-poc-tfstate-20240704233550"
+    bucket         = "<S3 bucket name>"
     key            = "./terraform.tfstate"
     region         = "us-west-2"
-    dynamodb_table = "sonarqube-tfstate-lock-table-20240704233550"
+    dynamodb_table = "<DynamoDB table name>"
     encrypt        = true
   }
 }
