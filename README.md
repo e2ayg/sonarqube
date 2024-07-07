@@ -79,6 +79,14 @@ This project uses a custom Dockerfile to build the SonarQube container image. Th
 # Use the official SonarQube community edition as the base image
 FROM sonarqube:9.9.6-community
 
+ARG BUILD_DATE
+
+# Add labels
+LABEL maintainer="your-name@example.com"
+LABEL version="1.0"
+LABEL description="Custom SonarQube Community Edition with preconfigured volumes"
+LABEL org.label-schema.build-date=$BUILD_DATE
+
 # Create necessary directories with correct permissions
 USER root
 RUN mkdir -p /opt/sonarqube/data /opt/sonarqube/logs /opt/sonarqube/extensions && \
@@ -172,4 +180,22 @@ To clean up and remove all resources created by this project, run the following 
 terraform destroy
 ```
 
-By following these steps, you will have a fully functional SonarQube setup on AWS ECS managed by Terraform, allowing for easy scaling and maintenance.
+### Alternative Cleanup Solution using CloudNuke
+As an alternative to terraform destroy, you can use [CloudNuke](https://github.com/gruntwork-io/cloud-nuke) to clean up all resources in your AWS account. 
+This is particularly useful if you want to ensure no resources are left behind.
+
+Install CloudNuke
+```Bash
+brew install cloud-nuke
+```
+
+Run CloudNuke
+```Bash
+cloud-nuke aws --region us-west-2
+```
+
+This command will search for and delete all AWS resources in the specified region. Make sure to review the resources it plans to delete before confirming the operation.
+
+
+By following these steps, you will have a fully functional SonarQube setup on AWS ECS managed by Terraform,
+allowing for easy scaling and maintenance.
