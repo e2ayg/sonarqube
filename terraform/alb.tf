@@ -5,6 +5,11 @@ resource "aws_lb" "sonarqube-lb" {
   security_groups                             = [aws_security_group.lb-sg.id]
   enable_tls_version_and_cipher_suite_headers = true
   subnets                                     = [aws_subnet.sonarqube-public-subnet-1.id, aws_subnet.sonarqube-public-subnet-2.id]
+
+  access_logs {
+    bucket = aws_s3_bucket.alb-access-logs
+
+  }
 }
 
 resource "aws_lb_listener" "https" {
@@ -68,4 +73,8 @@ resource "aws_appautoscaling_policy" "scale-down" {
     scale_in_cooldown  = 300
     scale_out_cooldown = 300
   }
+}
+
+resource  "aws_s3_bucket" "alb-access-logs" {
+
 }
