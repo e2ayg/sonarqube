@@ -22,46 +22,12 @@ jobs:
           framework: terraform,cloudformation,kubernetes,dockerfile,github_actions
           output_format: cli,sarif
           output_file_path: checkov-results.sarif
-          skip_check: |
-            CKV_AWS_22
-            CKV_AWS_131
-            CKV_AWS_150
-            CKV_AWS_261
-            CKV_AWS_338
-            CKV_AWS_158
-            CKV_AWS_161
-            CKV_AWS_157
-            CKV_AWS_118
-            CKV_AWS_353
-            CKV_AWS_354
-            CKV_AWS_226
-            CKV_AWS_129
-            CKV_AWS_293
-            CKV_AWS_136
-            CKV_AWS_51
-            CKV_AWS_65
-            CKV_AWS_249
-            CKV_AWS_290
-            CKV_AWS_355
-            CKV_AWS_7
-            CKV_AWS_149
-            CKV_AWS_23
-            CKV_AWS_130
-            CKV2_AWS_57
-            CKV2_AWS_11
-            CKV2_AWS_30
-            CKV2_AWS_12
-            CKV2_AWS_64
-            CKV2_AWS_60
-            CKV2_AWS_28
-            CKV_AWS_103
-            CKV2_AWS_3
-            CKV_DOCKER_2
-            CKV_GHA_8
-            CKV_GHA_9
+          
+      - name: Verify SARIF file
+        run: ls -l ./checkov-results.sarif
 
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v2
         if: success() || failure()
         with:
-          sarif_file: checkov-results.sarif
+          sarif_file: ./checkov-results.sarif
