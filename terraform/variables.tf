@@ -14,7 +14,7 @@ variable "region" {
 }
 
 variable "allowed_ip" {
-  description = "IP addresses allowed to access the ALB"
+  description = "IP addresses allowed to access the Load Balancer"
   type        = string
 }
 

@@ -1,13 +1,20 @@
-resource "aws_lb" "sonarqube-alb" {
-  name               = "sonarqube-alb"
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.alb-sg.id]
-  subnets            = [aws_subnet.sonarqube-public-subnet-1.id, aws_subnet.sonarqube-public-subnet-2.id]
+resource "aws_lb" "sonarqube-lb" {
+  name                                        = "sonarqube-lb"
+  internal                                    = false
+  load_balancer_type                          = "application"
+  security_groups                             = [aws_security_group.lb-sg.id]
+  enable_tls_version_and_cipher_suite_headers = true
+  subnets                                     = [aws_subnet.sonarqube-public-subnet-1.id, aws_subnet.sonarqube-public-subnet-2.id]
+
+  access_logs {
+    bucket  = aws_s3_bucket.alb-access-logs.id
+    prefix  = "sonarqube-lb"
+    enabled = true
+  }
 }
 
 resource "aws_lb_listener" "https" {
-  load_balancer_arn = aws_lb.sonarqube-alb.arn
+  load_balancer_arn = aws_lb.sonarqube-lb.arn
   port              = 443
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
@@ -67,4 +74,22 @@ resource "aws_appautoscaling_policy" "scale-down" {
     scale_in_cooldown  = 300
     scale_out_cooldown = 300
   }
+}
+
+resource "aws_s3_bucket" "alb-access-logs" {
+  bucket = "sonarqube-alb-access-logs-${data.aws_caller_identity.current.account_id}"
+
+  tags = {
+    Name        = "sonarqube-alb-access-logs"
+    Environment = var.environment
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "alb_access_logs" {
+  bucket = aws_s3_bucket.alb-access-logs.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
