@@ -6,37 +6,37 @@ resource "aws_cloudwatch_log_group" "ecs-log-group" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu-high" {
-  alarm_name                = "SonarQubeHighCPUUtilization"
-  comparison_operator       = "GreaterThanThreshold"
-  evaluation_periods        = "2"
-  metric_name               = "CPUUtilization"
-  namespace                 = "AWS/ECS"
-  period                    = "60"
-  statistic                 = "Average"
-  threshold                 = "80"
-  alarm_description         = "Alarm when CPU utilization exceeds 80%"
-  dimensions                = {
+  alarm_name          = "SonarQubeHighCPUUtilization"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods  = "2"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/ECS"
+  period              = "60"
+  statistic           = "Average"
+  threshold           = "80"
+  alarm_description   = "Alarm when CPU utilization exceeds 80%"
+  dimensions = {
     ClusterName = aws_ecs_cluster.sonarqube-cluster.name
     ServiceName = aws_ecs_service.sonarqube-service.name
   }
-  alarm_actions             = [aws_appautoscaling_policy.scale-up.arn]
+  alarm_actions = [aws_appautoscaling_policy.scale-up.arn]
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu-low" {
-  alarm_name                = "SonarQubeLowCPUUtilization"
-  comparison_operator       = "LessThanThreshold"
-  evaluation_periods        = "2"
-  metric_name               = "CPUUtilization"
-  namespace                 = "AWS/ECS"
-  period                    = "60"
-  statistic                 = "Average"
-  threshold                 = "20"
-  alarm_description         = "Alarm when CPU utilization is below 20%"
-  dimensions                = {
+  alarm_name          = "SonarQubeLowCPUUtilization"
+  comparison_operator = "LessThanThreshold"
+  evaluation_periods  = "2"
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/ECS"
+  period              = "60"
+  statistic           = "Average"
+  threshold           = "20"
+  alarm_description   = "Alarm when CPU utilization is below 20%"
+  dimensions = {
     ClusterName = aws_ecs_cluster.sonarqube-cluster.name
     ServiceName = aws_ecs_service.sonarqube-service.name
   }
-  alarm_actions             = [aws_appautoscaling_policy.scale-down.arn]
+  alarm_actions = [aws_appautoscaling_policy.scale-down.arn]
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu-alarm" {
