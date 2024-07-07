@@ -1,9 +1,10 @@
 resource "aws_lb" "sonarqube-lb" {
-  name               = "sonarqube-lb"
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.lb-sg.id]
-  subnets            = [aws_subnet.sonarqube-public-subnet-1.id, aws_subnet.sonarqube-public-subnet-2.id]
+  name                                        = "sonarqube-lb"
+  internal                                    = false
+  load_balancer_type                          = "application"
+  security_groups                             = [aws_security_group.lb-sg.id]
+  enable_tls_version_and_cipher_suite_headers = true
+  subnets                                     = [aws_subnet.sonarqube-public-subnet-1.id, aws_subnet.sonarqube-public-subnet-2.id]
 }
 
 resource "aws_lb_listener" "https" {
