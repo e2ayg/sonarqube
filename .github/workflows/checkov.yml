@@ -27,11 +27,8 @@ jobs:
         run: ls -l ./checkov-results.sarif
 
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         if: success() || failure()
         with:
           sarif_file: ./checkov-results.sarif
-
-permissions:
-  actions: read
   
