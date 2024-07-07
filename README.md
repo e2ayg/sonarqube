@@ -1,16 +1,16 @@
-## SonarQube Community on AWS ECS using Terraform
+# SonarQube Community on AWS ECS using Terraform
 
 
 This project sets up a complete AWS ECS infrastructure for running SonarQube Community Edition. 
 
 ![Images](/docs/sonarqube.png)
 
-### Who this project is for
+## Introduction
 This project is intended for DevOps teams who want to automate the deployment of SonarQube Community on AWS.
-SSolution helps you automate the deployment of resources required to run SonarQube on AWS ECS, including CloudWatch monitoring, RDS database, EFS storage, and an ALB.
+Solution helps you automate the deployment of resources required to run SonarQube on AWS ECS, including CloudWatch monitoring, RDS database, EFS storage, and an ALB.
 Unlike manually configuring infrastructure, solution leverages Terraform to ensure infrastructure as code, making it reproducible and maintainable.
 
-Here's what it includes:
+## Overview
 
 #### Container Management
 
@@ -55,7 +55,7 @@ Here's what it includes:
 
 This setup provides a scalable, secure, and monitored environment for running SonarQubeCommunity in AWS.
 
-### Project dependencies
+### Before you begin
 Before using solution, ensure you have:
 
 - OpenSSL
@@ -63,7 +63,7 @@ Before using solution, ensure you have:
 - AWS CLI configured with appropriate credentials
 
 
-### Install SonarQube on AWS
+### Installation steps
 
 Clone the repository:
 
@@ -164,6 +164,12 @@ Apply the Terraform configuration:
 
 ```Bash
 terraform apply
+```
+
+### Cleaning up
+To clean up and remove all resources created by this project, run the following command:
+```Bash
+terraform destroy
 ```
 
 By following these steps, you will have a fully functional SonarQube setup on AWS ECS managed by Terraform, allowing for easy scaling and maintenance.
