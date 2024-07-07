@@ -61,7 +61,7 @@ jobs:
             CKV_GHA_9
 
       - name: Upload SARIF file
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         if: success() || failure()
         with:
           sarif_file: checkov-results.sarif
