@@ -34,6 +34,7 @@ Here's what it includes:
 
 - **IAM Policies and Roles:** Manages permissions for ECS tasks
 - **Security Groups:** Controls network access for all components
+- **Amazon GuardDuty** Provides continuous monitoring and threat detection for AWS accounts and workloads.
 
 #### Monitoring and Logging
 
@@ -162,7 +163,5 @@ Apply the Terraform configuration:
 ```Bash
 terraform apply
 ```
-
-This command will create the necessary resources on AWS as described in the Terraform plan output.
 
 By following these steps, you will have a fully functional SonarQube setup on AWS ECS managed by Terraform, allowing for easy scaling and maintenance.
