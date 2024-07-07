@@ -17,3 +17,6 @@ jobs:
       with:
         scandir: './scripts'
         severity: error
+
+permissions:
+  actions: read
