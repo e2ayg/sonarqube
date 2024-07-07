@@ -43,7 +43,7 @@ resource "aws_appautoscaling_policy" "scale-up" {
   service_namespace  = aws_appautoscaling_target.sonarqube.service_namespace
 
   target_tracking_scaling_policy_configuration {
-    target_value       = 50.0
+    target_value = 50.0
     predefined_metric_specification {
       predefined_metric_type = "ECSServiceAverageCPUUtilization"
     }
@@ -60,7 +60,7 @@ resource "aws_appautoscaling_policy" "scale-down" {
   service_namespace  = aws_appautoscaling_target.sonarqube.service_namespace
 
   target_tracking_scaling_policy_configuration {
-    target_value       = 20.0
+    target_value = 20.0
     predefined_metric_specification {
       predefined_metric_type = "ECSServiceAverageCPUUtilization"
     }

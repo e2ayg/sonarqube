@@ -34,8 +34,8 @@ resource "aws_ecs_task_definition" "sonarqube" {
   family                   = "sonarqube-task"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  cpu                      = "1536"
-  memory                   = "3072"
+  cpu                      = "2048"
+  memory                   = "4096"
 
   volume {
     name = "sonarqube-data"
