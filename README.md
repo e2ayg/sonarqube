@@ -3,6 +3,8 @@
 
 This project sets up a complete AWS ECS infrastructure for running SonarQube Community Edition. 
 
+![Images](/docs/sonarqube.png)
+
 ### Who this project is for
 This project is intended for DevOps teams who want to automate the deployment of SonarQube Community on AWS.
 SSolution helps you automate the deployment of resources required to run SonarQube on AWS ECS, including CloudWatch monitoring, RDS database, EFS storage, and an ALB.
