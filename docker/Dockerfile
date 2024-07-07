@@ -8,7 +8,6 @@ LABEL maintainer="your-name@example.com"
 LABEL version="1.0"
 LABEL description="Custom SonarQube Community Edition with preconfigured volumes"
 LABEL org.label-schema.build-date=$BUILD_DATE
-LABEL org.opencontainers.image.license="GPL-3.0"
 
 # Create necessary directories with correct permissions
 USER root

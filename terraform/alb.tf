@@ -1,5 +1,5 @@
-resource "aws_lb" "sonarqube-lb" {
-  name                                        = "sonarqube-lb"
+resource "aws_lb" "sonarqube-alb" {
+  name                                        = "sonarqube-alb"
   internal                                    = false
   load_balancer_type                          = "application"
   security_groups                             = [aws_security_group.lb-sg.id]
@@ -8,13 +8,13 @@ resource "aws_lb" "sonarqube-lb" {
 
   access_logs {
     bucket  = aws_s3_bucket.alb-access-logs.id
-    prefix  = "sonarqube-lb"
+    prefix  = "sonarqube-alb"
     enabled = true
   }
 }
 
 resource "aws_lb_listener" "https" {
-  load_balancer_arn = aws_lb.sonarqube-lb.arn
+  load_balancer_arn = aws_lb.sonarqube-alb.arn
   port              = 443
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"
@@ -79,10 +79,7 @@ resource "aws_appautoscaling_policy" "scale-down" {
 resource "aws_s3_bucket" "alb-access-logs" {
   bucket = "sonarqube-alb-access-logs-${data.aws_caller_identity.current.account_id}"
 
-  tags = {
-    Name        = "sonarqube-alb-access-logs"
-    Environment = var.environment
-  }
+  tags = var.common_tags
 }
 
 resource "aws_s3_bucket_public_access_block" "alb_access_logs" {
