@@ -1,13 +1,13 @@
-resource "aws_lb" "sonarqube-alb" {
-  name               = "sonarqube-alb"
+resource "aws_lb" "sonarqube-lb" {
+  name               = "sonarqube-lb"
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.alb-sg.id]
+  security_groups    = [aws_security_group.lb-sg.id]
   subnets            = [aws_subnet.sonarqube-public-subnet-1.id, aws_subnet.sonarqube-public-subnet-2.id]
 }
 
 resource "aws_lb_listener" "https" {
-  load_balancer_arn = aws_lb.sonarqube-alb.arn
+  load_balancer_arn = aws_lb.sonarqube-lb.arn
   port              = 443
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-2016-08"

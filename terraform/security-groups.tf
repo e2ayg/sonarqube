@@ -34,7 +34,7 @@ resource "aws_security_group" "database-sg" {
   }
 }
 
-resource "aws_security_group" "alb-sg" {
+resource "aws_security_group" "lb-sg" {
   vpc_id = aws_vpc.sonarqube-vpc.id
 
   ingress {
