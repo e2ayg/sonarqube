@@ -7,8 +7,9 @@ resource "aws_lb" "sonarqube-lb" {
   subnets                                     = [aws_subnet.sonarqube-public-subnet-1.id, aws_subnet.sonarqube-public-subnet-2.id]
 
   access_logs {
-    bucket = aws_s3_bucket.alb-access-logs
-
+    bucket  = aws_s3_bucket.alb-access-logs.id
+    prefix  = "sonarqube-lb"
+    enabled = true
   }
 }
 
@@ -76,5 +77,19 @@ resource "aws_appautoscaling_policy" "scale-down" {
 }
 
 resource "aws_s3_bucket" "alb-access-logs" {
+  bucket = "sonarqube-alb-access-logs-${data.aws_caller_identity.current.account_id}"
 
+  tags = {
+    Name        = "sonarqube-alb-access-logs"
+    Environment = var.environment
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "alb_access_logs" {
+  bucket = aws_s3_bucket.alb-access-logs.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
