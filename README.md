@@ -37,6 +37,7 @@ Unlike manually configuring infrastructure, solution leverages Terraform to ensu
 - **IAM Policies and Roles:** Manages permissions for ECS tasks
 - **Security Groups:** Controls network access for all components
 - **Amazon GuardDuty** Provides continuous monitoring and threat detection for AWS accounts and workloads.
+- **KMS Key Policies:** Ensures that all KMS keys have policies defined.
 
 #### Monitoring and Logging
 
