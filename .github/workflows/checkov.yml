@@ -31,3 +31,7 @@ jobs:
         if: success() || failure()
         with:
           sarif_file: ./checkov-results.sarif
+
+permissions:
+  actions: read
+  
