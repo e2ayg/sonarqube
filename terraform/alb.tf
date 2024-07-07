@@ -75,6 +75,6 @@ resource "aws_appautoscaling_policy" "scale-down" {
   }
 }
 
-resource  "aws_s3_bucket" "alb-access-logs" {
+resource "aws_s3_bucket" "alb-access-logs" {
 
 }
