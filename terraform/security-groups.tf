@@ -42,7 +42,7 @@ resource "aws_security_group" "database-sg" {
   }
 }
 
-resource "aws_security_group" "lb-sg" {
+resource "aws_security_group" "load-balancer-sg" {
   name        = "Load Balancer Security Group"
   description = "This security group allows inbound traffic on port 443 (TCP) from the allowed IP address to the Load Balancer."
   vpc_id      = aws_vpc.sonarqube-vpc.id

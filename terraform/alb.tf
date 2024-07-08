@@ -2,7 +2,7 @@ resource "aws_lb" "sonarqube-alb" {
   name                                        = "sonarqube-alb"
   internal                                    = false
   load_balancer_type                          = "application"
-  security_groups                             = [aws_security_group.lb-sg.id]
+  security_groups                             = [aws_security_group.load-balancer-sg.id]
   enable_tls_version_and_cipher_suite_headers = true
   subnets                                     = [aws_subnet.sonarqube-public-subnet-1.id, aws_subnet.sonarqube-public-subnet-2.id]
 
