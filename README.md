@@ -114,7 +114,7 @@ Replace script variables with the necessary values.
 
 ### Prepare the Terraform backend:
 
-Run the [prepare=backend.sh](/scripts/prepare-backend.sh) script to prepare the backend configuration for Terraform:
+Run the [prepare-backend.sh](/scripts/prepare-backend.sh) script to prepare the backend configuration for Terraform:
 
 ```Bash
 ./scripts/prepare-backend.sh
